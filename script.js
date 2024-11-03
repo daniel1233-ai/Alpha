@@ -1,10 +1,10 @@
-// Load the cleaned data file (make sure it’s saved in the same directory).
+
 d3.csv("updated_combined_data_with_russia.csv").then(data => {
   
   const width = 960;
   const height = 600;
 
-  // Define a color scale for stability, with light blue to dark blue for increasing stability
+  
   const colorScale = d3.scaleLinear().domain([1, 8]).range(["#B0D0E0", "#0056A1"]); // Light to dark blue
 
   const svg = d3.select("#map")
@@ -12,9 +12,9 @@ d3.csv("updated_combined_data_with_russia.csv").then(data => {
                 .attr("width", width)
                 .attr("height", height);
 
-  // Load world GeoJSON data
+  
   d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson").then(geoData => {
-    // Draw the map
+    
     svg.selectAll("path")
        .data(geoData.features)
        .enter()
@@ -28,7 +28,7 @@ d3.csv("updated_combined_data_with_russia.csv").then(data => {
        .on("click", (event, d) => showCountryData(d.properties.name));
   });
 
-  // Function to show data when a country is clicked
+  
   function showCountryData(country) {
     const countryData = data.filter(row => row.Country === country);
     
@@ -37,12 +37,12 @@ d3.csv("updated_combined_data_with_russia.csv").then(data => {
       return;
     }
     
-    // Extract time series data for plotting
+    
     const years = countryData.map(row => +row.Year);
     const stability = countryData.map(row => +row.StabilityEstimate);
     const armsDeliveries = countryData.map(row => +row.ArmsDeliveries);
 
-    // Plot with Plotly
+  
     const trace1 = {
       x: years,
       y: stability,
